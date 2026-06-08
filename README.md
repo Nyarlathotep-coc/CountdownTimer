@@ -1,0 +1,38 @@
+﻿# 多功能倒计时器
+
+C# Windows Forms 课程设计作品
+
+## 功能模块
+
+- **单次倒计时** — 设置时/分/秒，开始/暂停/停止/加时，进度条显示
+- **番茄钟** — 工作/休息循环，自动切换，4轮一次长休息
+- **多任务** — 同时运行多个倒计时，独立控制
+- **历史记录** — 查看、搜索、删除已完成的任务记录
+- **系统设置** — 默认时间、番茄钟参数、主题颜色、声音开关等
+
+## 运行方式
+
+双击 `CountdownTimer.exe` 即可运行（需要 .NET Framework 4.8，Windows 系统自带）
+
+## 开发环境
+
+- 语言：C#
+- 框架：.NET Framework 4.8
+- UI：Windows Forms
+- 编译器：csc.exe（系统自带）
+
+## 编译方法
+
+```
+build.bat
+```
+
+或手动编译：
+
+```
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /target:winexe /out:CountdownTimer.exe /r:System.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll /r:System.Xml.dll /r:System.Core.dll /r:Microsoft.CSharp.dll /recurse:*.cs
+```
+
+## 数据存储
+
+历史记录和设置保存在 `%LOCALAPPDATA%\MyTimer123\` 目录下，XML 格式。
