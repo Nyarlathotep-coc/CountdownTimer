@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using CountdownTimer.Services;
@@ -12,10 +13,18 @@ namespace CountdownTimer.Forms
         private Label _bottomTitle;
         private UserControl _nowPage;
 
+        // 每个页面只创建一次，存起来复用
+        private SingleTimerPage _page0;
+        private PomoPage _page1;
+        private MultiPage _page2;
+        private HisPage _page3;
+        private SetPage _page4;
+        private AboutPage _page5;
+
         public MainForm()
         {
             InitForm();
-            OpenPage(new SingleTimerPage(this));
+            OpenPage(0);
         }
 
         private void InitForm()
@@ -50,6 +59,14 @@ namespace CountdownTimer.Forms
             Panel btnPanel = new Panel();
             btnPanel.Dock = DockStyle.Fill;
 
+            // 先创建所有页面
+            _page0 = new SingleTimerPage(this);
+            _page1 = new PomoPage(this);
+            _page2 = new MultiPage(this);
+            _page3 = new HisPage(this);
+            _page4 = new SetPage(this);
+            _page5 = new AboutPage();
+
             // 导航按钮
             string[] btns = { "单次倒计时", "番茄钟", "多任务", "历史记录", "系统设置", "关于" };
             for (int i = 0; i < btns.Length; i++)
@@ -70,15 +87,9 @@ namespace CountdownTimer.Forms
                 b.MouseEnter += (s, e) => { b.BackColor = Color.FromArgb(45, 48, 68); };
                 b.MouseLeave += (s, e) => { b.BackColor = Color.FromArgb(30, 33, 48); };
 
-                switch (i)
-                {
-                    case 0: b.Click += (s, e) => OpenPage(new SingleTimerPage(this)); break;
-                    case 1: b.Click += (s, e) => OpenPage(new PomoPage(this)); break;
-                    case 2: b.Click += (s, e) => OpenPage(new MultiPage(this)); break;
-                    case 3: b.Click += (s, e) => OpenPage(new HisPage(this)); break;
-                    case 4: b.Click += (s, e) => OpenPage(new SetPage(this)); break;
-                    case 5: b.Click += (s, e) => OpenPage(new AboutPage()); break;
-                }
+                int idx = i;
+                b.Click += (s, e) => OpenPage(idx);
+
                 btnPanel.Controls.Add(b);
             }
 
@@ -94,17 +105,27 @@ namespace CountdownTimer.Forms
             this.Controls.Add(_left);
         }
 
-        public void OpenPage(UserControl page)
+        public void OpenPage(int idx)
         {
             if (_nowPage != null)
             {
                 _right.Controls.Remove(_nowPage);
                 _nowPage.Visible = false;
             }
-            _nowPage = page;
-            page.Visible = true;
-            page.Dock = DockStyle.Fill;
-            _right.Controls.Add(page);
+
+            switch (idx)
+            {
+                case 0: _nowPage = _page0; break;
+                case 1: _nowPage = _page1; break;
+                case 2: _nowPage = _page2; break;
+                case 3: _nowPage = _page3; break;
+                case 4: _nowPage = _page4; break;
+                case 5: _nowPage = _page5; break;
+            }
+
+            _nowPage.Visible = true;
+            _nowPage.Dock = DockStyle.Fill;
+            _right.Controls.Add(_nowPage);
         }
     }
 }
