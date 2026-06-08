@@ -202,6 +202,20 @@ namespace CountdownTimer.Forms
             _numTip.Text = "已经搞了 " + _p.DoneNum + " 轮";
 
             if (st != PomoState.Work) TimerService.Beep();
+            // 完成一个工作时段 -> 存历史
+            if (st == PomoState.Break || st == PomoState.LongBreak)
+            {
+                Models.HistoryRecord r = new Models.HistoryRecord();
+                r.Name = "番茄钟";
+                r.Type = Models.TimerType.Pomodoro;
+                r.TotalSec = _p.WorkMin * 60;
+                r.UsedSec = _p.WorkMin * 60;
+                r.StartTime = _begin;
+                r.EndTime = DateTime.Now;
+                r.IsFinish = true;
+                r.Notes = "第 " + _p.DoneNum + " 轮番茄";
+                TimerService.AddHis(r);
+            }
             UpNum();
         }
 
