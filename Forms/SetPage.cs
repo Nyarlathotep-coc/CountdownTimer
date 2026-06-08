@@ -39,7 +39,7 @@ namespace CountdownTimer.Forms
             int cx = 20, cw = 520, y = 70;
 
             // 通用
-            var c1 = NewCard("通用", cx, y, cw, 160); y += 170;
+            var c1 = NewCard("通用", cx, y, cw, 170); y += 170;
             AddNum(c1, "默认分钟：", 45, out _defMin, 1, 999, 25);
             AddChk(c1, "声音提醒", 80, out _chkSound);
             AddChk(c1, "窗口置顶", 110, out _chkTop);
@@ -140,3 +140,4 @@ namespace CountdownTimer.Forms
         }
     }
 }
+
