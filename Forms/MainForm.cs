@@ -9,7 +9,7 @@ namespace CountdownTimer.Forms
     {
         private Panel _left;
         private Panel _right;
-        private Label _topTitle;
+        private Label _bottomTitle;
         private UserControl _nowPage;
 
         public MainForm()
@@ -35,16 +35,20 @@ namespace CountdownTimer.Forms
             _left.Width = 190;
             _left.BackColor = Color.FromArgb(30, 33, 48);
 
-            // 顶部标题 - 大字固定，不能改
-            _topTitle = new Label();
-            _topTitle.Text = "倒计时器";
-            _topTitle.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Bold);
-            _topTitle.ForeColor = Color.White;
-            _topTitle.TextAlign = ContentAlignment.MiddleCenter;
-            _topTitle.Height = 80;
-            _topTitle.Dock = DockStyle.Top;
-            _topTitle.Padding = new Padding(0, 15, 0, 0);
-            _left.Controls.Add(_topTitle);
+            // 底部标题 - 置底
+            _bottomTitle = new Label();
+            _bottomTitle.Text = "倒计时器";
+            _bottomTitle.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Bold);
+            _bottomTitle.ForeColor = Color.FromArgb(140, 140, 160);
+            _bottomTitle.TextAlign = ContentAlignment.MiddleCenter;
+            _bottomTitle.Height = 60;
+            _bottomTitle.Dock = DockStyle.Bottom;
+            _bottomTitle.Padding = new Padding(0, 0, 0, 10);
+            _left.Controls.Add(_bottomTitle);
+
+            // 按钮容器 - 占满中间
+            Panel btnPanel = new Panel();
+            btnPanel.Dock = DockStyle.Fill;
 
             // 导航按钮
             string[] btns = { "单次倒计时", "番茄钟", "多任务", "历史记录", "系统设置", "关于" };
@@ -75,8 +79,10 @@ namespace CountdownTimer.Forms
                     case 4: b.Click += (s, e) => OpenPage(new SetPage(this)); break;
                     case 5: b.Click += (s, e) => OpenPage(new AboutPage()); break;
                 }
-                _left.Controls.Add(b);
+                btnPanel.Controls.Add(b);
             }
+
+            _left.Controls.Add(btnPanel);
 
             // 右边内容区
             _right = new Panel();
@@ -93,7 +99,6 @@ namespace CountdownTimer.Forms
             if (_nowPage != null)
             {
                 _right.Controls.Remove(_nowPage);
-                // 不Dispose，只隐藏，这样多任务切回来还在
                 _nowPage.Visible = false;
             }
             _nowPage = page;
