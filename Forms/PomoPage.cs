@@ -201,8 +201,7 @@ namespace CountdownTimer.Forms
 
             _numTip.Text = "已经搞了 " + _p.DoneNum + " 轮";
 
-            if (st != PomoState.Work) TimerService.Beep();
-            // 完成一个工作时段 -> 存历史
+            if (st != PomoState.Work) // 完成一个工作时段 -> 存历史
             if (st == PomoState.Break || st == PomoState.LongBreak)
             {
                 Models.HistoryRecord r = new Models.HistoryRecord();
@@ -244,4 +243,5 @@ namespace CountdownTimer.Forms
         }
     }
 }
+
 

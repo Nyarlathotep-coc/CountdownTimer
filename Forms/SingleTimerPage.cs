@@ -222,8 +222,6 @@ namespace CountdownTimer.Forms
             _pBar.Value = 100;
             _tip.Text = "完成了！";
 
-            TimerService.Beep();
-
             HistoryRecord r = new HistoryRecord();
             r.Name = _my.MyName;
             r.Type = TimerType.Single;
@@ -262,3 +260,4 @@ namespace CountdownTimer.Forms
         }
     }
 }
+

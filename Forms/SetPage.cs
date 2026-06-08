@@ -39,11 +39,11 @@ namespace CountdownTimer.Forms
             int cx = 20, cw = 520, y = 70;
 
             // 通用
-            var c1 = NewCard("通用", cx, y, cw, 170); y += 180;
+            var c1 = NewCard("通用", cx, y, cw, 145); y += 155;
             AddNum(c1, "默认分钟：", 45, out _defMin, 1, 999, 25);
-            AddChk(c1, "声音提醒", 80, out _chkSound);
-            AddChk(c1, "窗口置顶", 110, out _chkTop);
-            AddChk(c1, "自动保存记录", 140, out _chkSave);
+            
+            AddChk(c1, "窗口置顶", 80, out _chkTop);
+            AddChk(c1, "自动保存记录", 110, out _chkSave);
 
             // 番茄钟
             var c2 = NewCard("番茄钟", cx, y, cw, 185); y += 195;
@@ -140,5 +140,6 @@ namespace CountdownTimer.Forms
         }
     }
 }
+
 
 

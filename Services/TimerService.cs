@@ -63,15 +63,16 @@ namespace CountdownTimer.Services
 
         public static void Beep()
         {
-            if (_set.PlaySound) SystemSounds.Beep.Play();
+            SystemSounds.Beep.Play();
         }
 
         public static void PopMsg(string title, string msg)
         {
-            if (_set.PlaySound) Beep();
+            Beep();
             System.Windows.Forms.MessageBox.Show(msg, title,
                 System.Windows.Forms.MessageBoxButtons.OK,
                 System.Windows.Forms.MessageBoxIcon.Information);
         }
     }
 }
+

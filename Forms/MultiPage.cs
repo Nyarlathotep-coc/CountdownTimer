@@ -228,7 +228,6 @@ namespace CountdownTimer.Forms
 
         private void WhenDone()
         {
-            TimerService.Beep();
             _lTime.ForeColor = Color.FromArgb(244, 67, 54);
             _lTime.Text = "OK";
             _pBar.Value = 100;
@@ -254,4 +253,5 @@ namespace CountdownTimer.Forms
         }
     }
 }
+
 
