@@ -39,18 +39,18 @@ namespace CountdownTimer.Forms
             int cx = 20, cw = 520, y = 70;
 
             // 通用
-            var c1 = NewCard("通用", cx, y, cw, 145); y += 150;
-            AddNum(c1, "默认分钟：", 20, out _defMin, 1, 999, 25);
-            AddChk(c1, "声音提醒", 50, out _chkSound);
-            AddChk(c1, "窗口置顶", 75, out _chkTop);
-            AddChk(c1, "自动保存记录", 100, out _chkSave);
+            var c1 = NewCard("通用", cx, y, cw, 160); y += 170;
+            AddNum(c1, "默认分钟：", 45, out _defMin, 1, 999, 25);
+            AddChk(c1, "声音提醒", 80, out _chkSound);
+            AddChk(c1, "窗口置顶", 110, out _chkTop);
+            AddChk(c1, "自动保存记录", 140, out _chkSave);
 
             // 番茄钟
-            var c2 = NewCard("番茄钟", cx, y, cw, 170); y += 175;
-            AddNum(c2, "工作分钟：", 20, out _wMin, 1, 120, 25);
-            AddNum(c2, "短歇分钟：", 50, out _bMin, 1, 60, 5);
-            AddNum(c2, "长歇分钟：", 80, out _lMin, 1, 60, 15);
-            AddNum(c2, "几轮长歇：", 110, out _cyc, 1, 10, 4);
+            var c2 = NewCard("番茄钟", cx, y, cw, 185); y += 195;
+            AddNum(c2, "工作分钟：", 45, out _wMin, 1, 120, 25);
+            AddNum(c2, "短歇分钟：", 80, out _bMin, 1, 60, 5);
+            AddNum(c2, "长歇分钟：", 115, out _lMin, 1, 60, 15);
+            AddNum(c2, "几轮长歇：", 150, out _cyc, 1, 10, 4);
 
             _btnSave = new Button(); _btnSave.Text = "保存"; _btnSave.Location = new Point(cx, y + 10); _btnSave.Size = new Size(100, 38);
             _btnSave.BackColor = Color.FromArgb(76, 175, 80); _btnSave.ForeColor = Color.White;
@@ -73,24 +73,24 @@ namespace CountdownTimer.Forms
         {
             var p = new Panel(); p.Location = new Point(x, y); p.Size = new Size(w, h); p.BackColor = Color.White;
             Label l = new Label(); l.Text = t; l.Font = new Font("Microsoft YaHei UI", 11F, FontStyle.Bold);
-            l.ForeColor = Color.FromArgb(60, 60, 80); l.Location = new Point(15, 8); l.Size = new Size(200, 22);
-            Label line = new Label(); line.Location = new Point(15, 30); line.Size = new Size(w - 30, 1); line.BackColor = Color.FromArgb(220, 220, 230);
+            l.ForeColor = Color.FromArgb(60, 60, 80); l.Location = new Point(15, 12); l.Size = new Size(200, 22);
+            Label line = new Label(); line.Location = new Point(15, 38); line.Size = new Size(w - 30, 1); line.BackColor = Color.FromArgb(220, 220, 230);
             p.Controls.Add(l); p.Controls.Add(line);
             return p;
         }
 
         private void AddNum(Panel p, string lab, int y, out NumericUpDown nud, int min, int max, int def)
         {
-            Label l = new Label(); l.Text = lab; l.Location = new Point(20 + 10, y); l.Size = new Size(140, 25);
+            Label l = new Label(); l.Text = lab; l.Location = new Point(25, y); l.Size = new Size(130, 25);
             l.ForeColor = Color.FromArgb(80, 80, 100); l.TextAlign = ContentAlignment.MiddleLeft;
-            nud = new NumericUpDown(); nud.Location = new Point(150, y); nud.Size = new Size(70, 25);
+            nud = new NumericUpDown(); nud.Location = new Point(160, y); nud.Size = new Size(70, 25);
             nud.Minimum = min; nud.Maximum = max; nud.Value = def;
             p.Controls.Add(l); p.Controls.Add(nud);
         }
 
         private void AddChk(Panel p, string t, int y, out CheckBox chk)
         {
-            chk = new CheckBox(); chk.Text = t; chk.Location = new Point(30, y);
+            chk = new CheckBox(); chk.Text = t; chk.Location = new Point(35, y);
             chk.Size = new Size(200, 25); chk.ForeColor = Color.FromArgb(80, 80, 100); chk.Checked = true;
             p.Controls.Add(chk);
         }
