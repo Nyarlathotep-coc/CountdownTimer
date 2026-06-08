@@ -52,7 +52,7 @@ namespace CountdownTimer.Forms
             _phase.Size = new Size(500, 30);
 
             _showTime = new Label();
-            _showTime.Text = "25:00";
+            _showTime.Text = _p.WorkMin.ToString("D2") + ":00";
             _showTime.Font = new Font("Consolas", 56F, FontStyle.Bold);
             _showTime.ForeColor = Color.FromArgb(50, 50, 70);
             _showTime.TextAlign = ContentAlignment.MiddleCenter;
@@ -244,3 +244,4 @@ namespace CountdownTimer.Forms
         }
     }
 }
+
