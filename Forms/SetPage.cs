@@ -13,7 +13,6 @@ namespace CountdownTimer.Forms
         private NumericUpDown _defMin;
         private NumericUpDown _wMin, _bMin, _lMin, _cyc;
         private CheckBox _chkSound, _chkTop, _chkSave;
-        private ComboBox _theme;
         private Button _btnSave, _btnDef;
 
         public SetPage(MainForm father)
@@ -40,10 +39,11 @@ namespace CountdownTimer.Forms
             int cx = 20, cw = 520, y = 70;
 
             // 通用
-            var c1 = NewCard("通用", cx, y, cw, 110); y += 115;
+            var c1 = NewCard("通用", cx, y, cw, 145); y += 150;
             AddNum(c1, "默认分钟：", 20, out _defMin, 1, 999, 25);
             AddChk(c1, "声音提醒", 50, out _chkSound);
             AddChk(c1, "窗口置顶", 75, out _chkTop);
+            AddChk(c1, "自动保存记录", 100, out _chkSave);
 
             // 番茄钟
             var c2 = NewCard("番茄钟", cx, y, cw, 170); y += 175;
@@ -51,14 +51,6 @@ namespace CountdownTimer.Forms
             AddNum(c2, "短歇分钟：", 50, out _bMin, 1, 60, 5);
             AddNum(c2, "长歇分钟：", 80, out _lMin, 1, 60, 15);
             AddNum(c2, "几轮长歇：", 110, out _cyc, 1, 10, 4);
-
-            // 外观
-            var c3 = NewCard("外观", cx, y, cw, 80); y += 85;
-            Label tl = new Label(); tl.Text = "主题："; tl.Location = new Point(20, 15); tl.Size = new Size(180, 25); tl.ForeColor = Color.FromArgb(80, 80, 100);
-            _theme = new ComboBox(); _theme.Location = new Point(200, 13); _theme.Size = new Size(150, 25); _theme.DropDownStyle = ComboBoxStyle.DropDownList;
-            _theme.Items.Add("经典蓝"); _theme.Items.Add("暗黑"); _theme.Items.Add("森林绿"); _theme.Items.Add("魅紫");
-            c3.Controls.Add(tl); c3.Controls.Add(_theme);
-            AddChk(c3, "自动保存记录", 45, out _chkSave);
 
             _btnSave = new Button(); _btnSave.Text = "保存"; _btnSave.Location = new Point(cx, y + 10); _btnSave.Size = new Size(100, 38);
             _btnSave.BackColor = Color.FromArgb(76, 175, 80); _btnSave.ForeColor = Color.White;
@@ -74,7 +66,7 @@ namespace CountdownTimer.Forms
             _btnDef.Click += (s, e) => ResetIt();
 
             this.Controls.Add(title); this.Controls.Add(c1); this.Controls.Add(c2);
-            this.Controls.Add(c3); this.Controls.Add(_btnSave); this.Controls.Add(_btnDef);
+            this.Controls.Add(_btnSave); this.Controls.Add(_btnDef);
         }
 
         private Panel NewCard(string t, int x, int y, int w, int h)
@@ -113,17 +105,10 @@ namespace CountdownTimer.Forms
             _chkSound.Checked = _s.PlaySound;
             _chkTop.Checked = _s.TopWin;
             _chkSave.Checked = _s.AutoSave;
-
-            if (_s.Theme == "Blue") _theme.SelectedIndex = 0;
-            else if (_s.Theme == "Dark") _theme.SelectedIndex = 1;
-            else if (_s.Theme == "Green") _theme.SelectedIndex = 2;
-            else if (_s.Theme == "Purple") _theme.SelectedIndex = 3;
-            else _theme.SelectedIndex = 0;
         }
 
         private void SaveIt()
         {
-            string[] ts = { "Blue", "Dark", "Green", "Purple" };
             _s.DefMin = (int)_defMin.Value;
             _s.PomoWork = (int)_wMin.Value;
             _s.PomoBreak = (int)_bMin.Value;
@@ -132,10 +117,9 @@ namespace CountdownTimer.Forms
             _s.PlaySound = _chkSound.Checked;
             _s.TopWin = _chkTop.Checked;
             _s.AutoSave = _chkSave.Checked;
-            _s.Theme = ts[_theme.SelectedIndex];
 
             TimerService.SaveSet(_s);
-            _father.RefSet();
+            _father.TopMost = _s.TopWin;
             MessageBox.Show("搞定了！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -148,10 +132,9 @@ namespace CountdownTimer.Forms
                 _s.DefMin = d.DefMin; _s.PomoWork = d.PomoWork; _s.PomoBreak = d.PomoBreak;
                 _s.PomoLong = d.PomoLong; _s.PomoCycle = d.PomoCycle;
                 _s.PlaySound = d.PlaySound; _s.TopWin = d.TopWin; _s.AutoSave = d.AutoSave;
-                _s.Theme = d.Theme;
                 LoadSet();
                 TimerService.SaveSet(_s);
-                _father.RefSet();
+                _father.TopMost = _s.TopWin;
                 MessageBox.Show("恢复好了", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

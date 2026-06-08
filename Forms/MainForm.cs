@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using CountdownTimer.Models;
 using CountdownTimer.Services;
 
 namespace CountdownTimer.Forms
@@ -12,19 +11,16 @@ namespace CountdownTimer.Forms
         private Panel _right;
         private Label _topTitle;
         private UserControl _nowPage;
-        private AppSettings _set;
 
         public MainForm()
         {
-            _set = TimerService.GetSet();
             InitForm();
-            SetTheme();
             OpenPage(new SingleTimerPage(this));
         }
 
         private void InitForm()
         {
-            this.Text = "我的倒计时器";
+            this.Text = "倒计时器";
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Size = new Size(960, 640);
             this.MinimumSize = new Size(800, 500);
@@ -39,14 +35,15 @@ namespace CountdownTimer.Forms
             _left.Width = 190;
             _left.BackColor = Color.FromArgb(30, 33, 48);
 
+            // 顶部标题 - 大字固定，不能改
             _topTitle = new Label();
             _topTitle.Text = "倒计时器";
-            _topTitle.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Bold);
+            _topTitle.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Bold);
             _topTitle.ForeColor = Color.White;
             _topTitle.TextAlign = ContentAlignment.MiddleCenter;
-            _topTitle.Height = 60;
+            _topTitle.Height = 80;
             _topTitle.Dock = DockStyle.Top;
-            _topTitle.Padding = new Padding(0, 10, 0, 0);
+            _topTitle.Padding = new Padding(0, 15, 0, 0);
             _left.Controls.Add(_topTitle);
 
             // 导航按钮
@@ -66,7 +63,6 @@ namespace CountdownTimer.Forms
                 b.Dock = DockStyle.Top;
                 b.Cursor = Cursors.Hand;
 
-                int idx = i;
                 b.MouseEnter += (s, e) => { b.BackColor = Color.FromArgb(45, 48, 68); };
                 b.MouseLeave += (s, e) => { b.BackColor = Color.FromArgb(30, 33, 48); };
 
@@ -97,28 +93,13 @@ namespace CountdownTimer.Forms
             if (_nowPage != null)
             {
                 _right.Controls.Remove(_nowPage);
-                _nowPage.Dispose();
+                // 不Dispose，只隐藏，这样多任务切回来还在
+                _nowPage.Visible = false;
             }
             _nowPage = page;
+            page.Visible = true;
             page.Dock = DockStyle.Fill;
             _right.Controls.Add(page);
-        }
-
-        public void SetTheme()
-        {
-            if (_set == null) return;
-            if (_set.Theme == "Blue") _left.BackColor = Color.FromArgb(30, 33, 48);
-            else if (_set.Theme == "Dark") _left.BackColor = Color.FromArgb(20, 20, 30);
-            else if (_set.Theme == "Green") _left.BackColor = Color.FromArgb(30, 60, 40);
-            else if (_set.Theme == "Purple") _left.BackColor = Color.FromArgb(50, 30, 70);
-            _right.BackColor = Color.FromArgb(245, 245, 250);
-        }
-
-        public void RefSet()
-        {
-            _set = TimerService.GetSet();
-            SetTheme();
-            this.TopMost = _set.TopWin;
         }
     }
 }
