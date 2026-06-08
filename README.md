@@ -1,4 +1,4 @@
-﻿# 多功能倒计时器
+# 多功能倒计时器
 
 C# Windows Forms 课程设计作品
 
@@ -12,7 +12,7 @@ C# Windows Forms 课程设计作品
 
 ## 运行方式
 
-双击 `CountdownTimer.exe` 即可运行（需要 .NET Framework 4.8，Windows 系统自带）
+双击 CountdownTimer.exe 即可运行（需要 .NET Framework 4.8，Windows 系统自带）
 
 ## 开发环境
 
@@ -23,16 +23,8 @@ C# Windows Forms 课程设计作品
 
 ## 编译方法
 
-```
 build.bat
-```
-
-或手动编译：
-
-```
-C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /target:winexe /out:CountdownTimer.exe /r:System.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll /r:System.Xml.dll /r:System.Core.dll /r:Microsoft.CSharp.dll /recurse:*.cs
-```
 
 ## 数据存储
 
-历史记录和设置保存在 `%LOCALAPPDATA%\MyTimer123\` 目录下，XML 格式。
+历史记录和设置保存在 %LOCALAPPDATA%\MyTimer123\ 目录下，XML 格式。
